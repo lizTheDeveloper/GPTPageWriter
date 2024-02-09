@@ -1,0 +1,21 @@
+
+gcloud config set project multiverseschoolapi
+
+gcloud storage buckets create bucket-name \
+    --location=us-west1 \
+    --storage-class=STANDARD
+
+gcloud storage buckets add-iam-policy-binding gs://bucket-name \
+    --member="allUsers" \
+    --role="roles/storage.objectViewer"
+
+gcloud iam service-accounts create bucketuploader \
+    --description="Bucket Uploader" \
+    --display-name="Bucket Uploader"
+
+gcloud projects add-iam-policy-binding your-organization-name \
+    --member="serviceAccount:bucketuploader@your-organization-name.iam.gserviceaccount.com" \
+    --role="roles/storage.objectCreator"
+
+gcloud iam service-accounts keys create bucket_service_account.json \
+    --iam-account bucketuploader@your-organization-name.iam.gserviceaccount.com

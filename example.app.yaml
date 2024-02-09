@@ -1,0 +1,9 @@
+runtime: python312 # Specify your Python version here
+entrypoint: uvicorn main:app --host=0.0.0.0 --port=$PORT
+service: ai-page-api 
+
+instance_class: F2
+
+env_variables:
+  # Define environment variables your application needs, if any.
+  DATABASE_URL: "YOUR_DB_URL"
